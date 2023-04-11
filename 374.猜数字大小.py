@@ -14,11 +14,16 @@
 
 class Solution:
     def guessNumber(self, n: int) -> int:
-        result = guess(n)
-        while True:
-            if result != 0:
-                result = guess(n)
+        left, right = 1, n
+        while left < right:
+            mid = (left + right) // 2
+            if guess(mid) <= 0:
+                right = mid   # 答案在区间 [left, mid] 中
             else:
-                return n
+                left = mid + 1   # 答案在区间 [mid+1, right] 中
+        
+        # 此时有 left == right，区间缩为一个点，即为答案
+        return left
 
 # @lc code=end
+
